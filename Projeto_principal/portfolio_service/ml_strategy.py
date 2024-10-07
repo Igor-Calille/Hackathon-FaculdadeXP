@@ -60,6 +60,5 @@ class MLStrategy(bt.Strategy):
         return size
 
     def stop(self):
-        # Quando a estratégia terminar, salvar os valores do portfólio e as alocações em um CSV
         df = pd.DataFrame(self.value_list)
         df.to_csv('portfolio_values_and_allocations.csv', index=False)

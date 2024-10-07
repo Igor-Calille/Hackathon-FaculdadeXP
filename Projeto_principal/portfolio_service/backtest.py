@@ -46,16 +46,12 @@ def run_backtest(tickers, valor_inicial=10000):
         )
         cerebro.adddata(data, name=stock)
 
-    # Adicionar a estratégia
     cerebro.addstrategy(MLStrategy)
 
-    # Executar o backtest
     strategies = cerebro.run()
 
-    # Capturar a primeira estratégia executada
     strat = strategies[0]
 
-    # Obter o valor do portfólio e retornar
     results = [{'date': entry['date'], 'total_portfolio_value': entry['total_portfolio_value']} for entry in strat.value_list]
     for entry in strat.value_list:
         for stock in tickers:

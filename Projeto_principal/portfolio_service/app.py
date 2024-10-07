@@ -14,12 +14,10 @@ def calculate_portfolio():
     tickers = data.get('tickers', [])
     start_date = data.get('start_date', '2021-01-01')
     valor_inicial = data.get('valor_inicial', 10000)  # Valor inicial padrão caso não seja passado
-    
-    # Verifica e cria o diretório 'csv_data' se não existir
+
     if not os.path.exists('csv_data'):
         os.makedirs('csv_data')
 
-    # Obtenção dos dados financeiros
     yfi = YFinanceData()
     dados_acoes = yfi.get_data_from_date(tickers, start_date)
 
@@ -38,10 +36,8 @@ def calculate_portfolio():
         sharpe = calculate_sharpe_ratio(dados, federal_fund_rate)
         dados['sharpe_ratio'] = sharpe
 
-        # Salvar os dados com sinais de ML e Sharpe Ratio em um arquivo CSV
         dados.to_csv(f'csv_data/{ticker}_data_with_sharpe.csv', index=False)
 
-    # Executar o backtesting com o valor inicial passado
     portfolio_values = run_backtest(tickers, valor_inicial)
 
     return jsonify(portfolio_values)
